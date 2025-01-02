@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="title-section">
+        <h2>Expense Tracker Application</h2>
+    </div>
+
+    <div class="main-section">
+        <div class="form-section">
+            <form class="form-format">
+                <div class="form-functions">
+                    <label style="margin-bottom: 16px">Form Functions: </label>
+                    <select name="function" id="function">
+                        <option value="insert">Insert</option>
+                        <option value="delete">Delete</option>
+                    </select>
+                </div>
+
+                <div class="input-format">
+                    <label>Category: </label>
+                    <select name="category" id="category">
+                        <option value="food">Food</option>
+                        <option value="transport">Transport</option>
+                        <option value="education">Education</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="groceries">Groceries</option>
+                    </select>
+                </div>
+
+                <div class="form-interface"></div>
+            </form>
+        </div>
+    
+        <div class="table-section">
+            <table class="table-format" id="data-table">
+                <thead></thead>
+
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="table-btns-section">
+        <h3>Table Functions: </h3>
+        <button id="fetch-data-btn">Fetch Data</button>
+        <button onclick="">Visualize Data</button>
+    </div>
+
+    <script type="module" src="index.js"></script>/>
+</body>
+</html>
