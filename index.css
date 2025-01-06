@@ -1,6 +1,7 @@
 
 body{
     background-color:  rgba(25, 25, 112, 0.3);
+    font-size: 16px; /* Base size */
 }
 
 .title-section, .form-section{
@@ -12,10 +13,10 @@ body{
     margin: 10px 10px;
     font-family: Geneva, Tahoma, sans-serif;
     margin: 20px 9%;
-    font-size: 26px;
+    font-size: 1.5rem;
 }
 
-.main-section{
+.main-section, .graph-section{
     display: flex;
     justify-content: space-between;
 }
@@ -48,7 +49,7 @@ body{
     align-items: center;
     display: flex;
     flex-direction: row;
-    font-size: 20px;
+    font-size: 1.2rem;
     margin: 20px;
     padding: 18px 10px;
     justify-content: space-between;
@@ -59,7 +60,7 @@ body{
     align-items: center;
     display: flex;
     flex-direction: column;
-    font-size: 20px;
+    font-size: 1.2rem;
     margin: 20px;
     padding: 18px 10px;
     justify-content: space-between;
@@ -69,7 +70,7 @@ body{
     align-items: center;
     width: 70%;
     margin: 10px 15%;
-    font-size: 20px;
+    font-size: 1.2rem;
 }
 
 label{
@@ -78,9 +79,9 @@ label{
 
 input, select{
     /* padding: 6px 10px; */
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 500;
-    width: 216px;
+    width: 100%;
     height: 34px;
     border-radius: 5px;
     background-color: rgba(25, 25, 112, 0.1);
@@ -128,11 +129,22 @@ input[type="number"] {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 22%;
-    margin-left: 9%;
-    margin-top: 1%;
     border: 1px solid black;
-    padding: 6px;
-    font-size: 18px;
+    margin: 2%;
+    padding: 1%;
+    font-size: 1.1rem;
     font-weight: bold;
+}
+
+.chart-container {
+  margin: 1% 9%;
+  padding: 0;
+  box-sizing: border-box;
+  width: 82%; /* Ensures the chart takes the remaining width */
+  overflow: hidden; /* Prevents overflow beyond the container */
+}
+
+#myChart {
+  width: 100%; /* Makes the chart responsive within the container */
+  height: auto; /* Maintains aspect ratio */
 }

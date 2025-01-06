@@ -1,5 +1,7 @@
 // Imports
-import { fetchFoodData, insertFoodData } from './JS_Functions/food_functions.js';
+import { insertData } from './JS_Functions/global_functions.js';
+import { fetchFoodData, fetchEducationData, fetchGroceriesData, fetchEntertainmentData, fetchTransportData, selectiveFetch } from './JS_Functions/fetch_functions.js';
+import { fetchFoodDataTest } from './JS_Functions/food_functions.js';
 
 // All the onload calls that should be executed once the page loads are kept here
 window.onload = () => {
@@ -18,7 +20,6 @@ function selectiveRenderFunction(){
     switch(func){
         case 'insert':
             insertInterface();
-            // selectiveRenderCategory(); 
             break;
         
         case 'delete':
@@ -41,7 +42,7 @@ function insertInterface(){
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'row',
-        fontSize: '20px',
+        fontSize: '1.2rem',
         margin: '20px',
         padding: '18px 10px',
         justifyContent: 'space-between',
@@ -70,7 +71,7 @@ function insertInterface(){
     const insertBtn = document.createElement('button');
     insertBtn.style.marginBottom = '20px';
     insertBtn.textContent = 'Insert Data';
-    insertBtn.addEventListener('click', insertData);
+    insertBtn.addEventListener('click', insertDataOnCategory);
     insertBtn.type = 'button';
 
     // Appending the Insert Data Btn
@@ -86,7 +87,7 @@ function deleteInterface(){
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'column',
-        fontSize: '20px',
+        fontSize: '1rem',
         margin: '20px',
         padding: '18px 10px',
         justifyContent: 'space-between'
@@ -125,36 +126,39 @@ function selectiveRenderCategory(){
     const newDataBtn = fetchDataBtn.cloneNode(true); // Cloning our original btn to replace it with the clone to remove all existing eventHandlers at once.
 
     switch(category){
-        case 'food':
-            newDataBtn.addEventListener('click', () => {
-                fetchFoodData();
-            });
-            fetchDataBtn.parentNode.replaceChild(newDataBtn, fetchDataBtn);              
-            break;
-        
-        case 'transport':
-            fetchDataBtn.parentNode.replaceChild(newDataBtn, fetchDataBtn);
-            break;
-        
-        case 'entertainment':
+        case 'food_expense':
+           newDataBtn.addEventListener('click', () => fetchFoodData());
+           fetchDataBtn.parentNode.replaceChild(newDataBtn, fetchDataBtn);
+           break;
+
+        case 'transport_expense':
+            newDataBtn.addEventListener('click', () => fetchTransportData());
             fetchDataBtn.parentNode.replaceChild(newDataBtn, fetchDataBtn);
             break;
 
-        case 'education':
+        case 'education_expense':
+            newDataBtn.addEventListener('click', () => fetchEducationData());
             fetchDataBtn.parentNode.replaceChild(newDataBtn, fetchDataBtn);
             break;
         
-        case 'groceries':
+        case 'entertainment_expense':
+            newDataBtn.addEventListener('click', () => fetchEntertainmentData());
+            fetchDataBtn.parentNode.replaceChild(newDataBtn, fetchDataBtn);
+            break;
+        
+        case 'groceries_expense':
+            newDataBtn.addEventListener('click', () => fetchGroceriesData());
             fetchDataBtn.parentNode.replaceChild(newDataBtn, fetchDataBtn);
             break;
         
         default:
-            console.log("Undefined Btn Value!");
+            console.log("Invalid Btn");
+            break;
     }
 };
 
-// Defining a function InsertData() to insert the data of the input fields to the our DB
-function insertData(){
+// Defining a function insertDataOnCategory() to insert the data of the input fields to the our DB
+async function insertDataOnCategory(){
     const category = document.getElementById("category").value;
     const amount = parseInt(document.getElementById("amount").value);
     const entryDate = document.getElementById("date").value;
@@ -162,30 +166,30 @@ function insertData(){
 
     console.table(amount, entryDate, productName);
 
-    switch(category){
-        case 'food':
-            insertFoodData(productName, amount, entryDate);
-            break;
-        
-        case 'transport':
-
-    }
+    await insertData(category, productName, amount, entryDate);
+    selectiveFetch(category);
 
     document.getElementById("amount").value = '';
     document.getElementById("date").value = '';
     document.getElementById("product-name").value = '';
 }
 
-async function deleteData(foodId){
+async function deleteData(id){
+    const category = document.getElementById("category").value;
     try{
-        await fetch("http://localhost:5000/food-delete", {
+        await fetch("http://localhost:5000/delete", {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ foodId }),
+            body: JSON.stringify({ 
+                table_name: category, 
+                id: id 
+            }),
         });
     } catch(e){
         console.log(e.message);
     }
+
+    selectiveFetch(category); // Selective Fetch to display the updated table after deleting data.
 }

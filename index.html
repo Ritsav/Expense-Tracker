@@ -26,31 +26,36 @@
                 <div class="input-format">
                     <label>Category: </label>
                     <select name="category" id="category">
-                        <option value="food">Food</option>
-                        <option value="transport">Transport</option>
-                        <option value="education">Education</option>
-                        <option value="entertainment">Entertainment</option>
-                        <option value="groceries">Groceries</option>
+                        <option value="food_expense">Food</option>
+                        <option value="transport_expense">Transport</option>
+                        <option value="education_expense">Education</option>
+                        <option value="entertainment_expense">Entertainment</option>
+                        <option value="groceries_expense">Groceries</option>
                     </select>
                 </div>
 
                 <div class="form-interface"></div>
             </form>
         </div>
-    
-        <div class="table-section">
-            <table class="table-format" id="data-table">
-                <thead></thead>
 
-                <tbody></tbody>
-            </table>
+        <div class="table-section">
+            <div class="table-btns-section">
+                <h3>Table Functions: </h3>
+                    <button id="fetch-data-btn">Fetch Data</button>
+                    <button id="visualize-data-btn">Visualize Data</button>
+            </div>
+
+                <table class="table-format" id="data-table">
+                    <thead></thead>
+
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <div class="table-btns-section">
-        <h3>Table Functions: </h3>
-        <button id="fetch-data-btn">Fetch Data</button>
-        <button onclick="">Visualize Data</button>
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
     </div>
 
     <script type="module" src="index.js"></script>/>

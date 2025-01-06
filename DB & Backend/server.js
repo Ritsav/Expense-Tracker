@@ -10,12 +10,13 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
-app.post("/food-entry", async(req, res) => {
+// Post Methods
+app.post("/entry", async(req, res) => {
     try{
-        const {food_name, amount, date} = req.body;
+        const {category, name, amount, date} = req.body;
         const newEntry = await pool.query(
-            "INSERT INTO foodexpense(food_name, amount, entrydate) VALUES($1, $2, $3) RETURNING *",
-            [food_name, amount, date]
+            `INSERT INTO ${category}(name, amount, date) VALUES($1, $2, $3) RETURNING *`,
+            [name, amount, date]
         );
 
         res.json(newEntry.rows);
@@ -24,10 +25,11 @@ app.post("/food-entry", async(req, res) => {
     }
 });
 
+// Get Methods
 app.get("/food-fetch", async (req, res) => {
     try{
         const foodFetch = await pool.query(
-            "SELECT * FROM foodexpense",
+            "SELECT * FROM food_expense",
         );
         res.json(foodFetch.rows);
     } catch(e){
@@ -35,28 +37,59 @@ app.get("/food-fetch", async (req, res) => {
     }
 });
 
-app.delete("/food-delete", async(req, res) => {
+app.get("/transport-fetch", async(req, res) => {
     try{
-        const { foodId } = req.body;
-        const foodDelete = await pool.query(
-            "DELETE FROM foodexpense WHERE foodid=$1",
-            [ foodId ]
+        const transportFetch = await pool.query(
+            "SELECT * FROM transport_expense",
         );
-        res.json(foodDelete.rows);
+        res.json(transportFetch.rows);
     } catch(e){
         console.log(e.message);
     }
-})
+});
 
-app.post("/transport-entry", async (req, res) => {
-    try{   
-        const {date, amount} = req.body;
-        const newEntry = await pool.query(
-            "INSERT INTO transportexpense(date, amount) VALUES($1, $2) RETURNING *",
-            [date, amount]
+app.get("/entertainment-fetch", async(req, res) => {
+    try{
+        const entertainFetch = await pool.query(
+            "SELECT * FROM entertainment_expense",
         );
+        res.json(entertainFetch.rows);
+    } catch(e){
+        console.log(e.message);
+    }
+});
 
-        res.json(newEntry.rows);
+app.get("/education-fetch", async(req, res) => {
+    try{
+        const groceriesFetch = await pool.query(
+            "SELECT * FROM education_expense",
+        );
+        res.json(educationFetch.rows);
+    } catch(e){
+        console.log(e.message);
+    }
+});
+
+app.get("/groceries-fetch", async(req, res) => {
+    try{
+        const groceriesFetch = await pool.query(
+            "SELECT * FROM groceries_expense",
+        );
+        res.json(groceriesFetch.rows);
+    } catch(e){
+        console.log(e.message);
+    }
+});
+
+// Delete Methods
+app.delete("/delete", async(req, res) => {
+    try{
+        const { table_name, id } = req.body;
+        const foodDelete = await pool.query(
+            `DELETE FROM ${table_name} WHERE id=$1`,
+            [ id ]
+        );
+        res.json(foodDelete.rows);
     } catch(e){
         console.log(e.message);
     }

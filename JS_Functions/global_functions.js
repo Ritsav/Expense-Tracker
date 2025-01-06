@@ -44,3 +44,25 @@ export function populateTable(data){
         item.style.border = '1px solid black';
     });
 }
+
+export async function insertData(category, productname, amount, entrydate){
+    try{
+        const response = await fetch("http://localhost:5000/entry", {
+            method: "post",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
+                category: category,
+                name: productname, 
+                amount: amount, 
+                date: entrydate
+            })
+        })
+        
+        const data = await response.json();
+        console.log(data);
+    } catch(e){
+        console.log(e.message);
+    }
+}
