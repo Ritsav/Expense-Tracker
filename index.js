@@ -1,7 +1,7 @@
 // Imports
-import { insertData } from './JS_Functions/global_functions.js';
+import { insertData, searchDB } from './JS_Functions/global_functions.js';
 import { fetchFoodData, fetchEducationData, fetchGroceriesData, fetchEntertainmentData, fetchTransportData, selectiveFetch } from './JS_Functions/fetch_functions.js';
-import { fetchFoodDataTest } from './JS_Functions/food_functions.js';
+import { fetchFoodDataTest } from './JS_Functions/visualize_functions.js';
 
 // All the onload calls that should be executed once the page loads are kept here
 window.onload = () => {
@@ -12,6 +12,10 @@ window.onload = () => {
 // Attaching necessary eventListeners to btns & selectors
 document.getElementById('function').addEventListener('change', selectiveRenderFunction);
 document.getElementById('category').addEventListener('change', selectiveRenderCategory);
+// Search 
+document.getElementById('search-db').addEventListener('keypress', (e) => {
+    if(e.key === "Enter") searchDB();
+});
 
 // Implement selective table functions render feature
 function selectiveRenderFunction(){
@@ -192,4 +196,17 @@ async function deleteData(id){
     }
 
     selectiveFetch(category); // Selective Fetch to display the updated table after deleting data.
+}
+
+// Implement barCharts, pieCharts, lineCharts available for all data, only one data and multiple data comparisons
+// For now, it is just a simple implementation
+async function visualizeChart(){
+    const category = document.getElementById("category").value;
+    const visualizeBtn = document.getElementById("visualize-data-btn");
+
+    switch(category){
+        case 'food_expense':
+            visualizeBtn.addEventListener('click', fetchFoodDataTest);
+            break;
+    }
 }

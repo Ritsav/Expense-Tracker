@@ -6,7 +6,7 @@
     <title>Expense Tracker</title>
     <link rel="stylesheet" href="index.css">
 </head>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <body>
     <div class="title-section">
         <h2>Expense Tracker Application</h2>
@@ -41,8 +41,14 @@
         <div class="table-section">
             <div class="table-btns-section">
                 <h3>Table Functions: </h3>
-                    <button id="fetch-data-btn">Fetch Data</button>
-                    <button id="visualize-data-btn">Visualize Data</button>
+                    <div class="btns-section" style="align-items: center; margin-top: 4px;">
+                        <button id="fetch-data-btn">Fetch Data</button>
+                        <button id="visualize-data-btn">Visualize Data</button>
+                    </div>
+                    <div class="search-box" style="display: flex;  align-items: center;">
+                        <label>Search Item: </label>
+                        <input type="text" id="search-db">
+                    </div>
             </div>
 
                 <table class="table-format" id="data-table">

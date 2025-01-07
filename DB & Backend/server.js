@@ -61,7 +61,7 @@ app.get("/entertainment-fetch", async(req, res) => {
 
 app.get("/education-fetch", async(req, res) => {
     try{
-        const groceriesFetch = await pool.query(
+        const educationFetch = await pool.query(
             "SELECT * FROM education_expense",
         );
         res.json(educationFetch.rows);
@@ -90,6 +90,41 @@ app.delete("/delete", async(req, res) => {
             [ id ]
         );
         res.json(foodDelete.rows);
+    } catch(e){
+        console.log(e.message);
+    }
+});
+
+
+
+// Test Methods
+// Implement a method that can query search expenses of only a particular year and draw graphs for it
+// 1. Firstly, implement search query for database 
+app.post('/search', async(req, res) => {
+    try{
+        const table_name = 'food_expense';
+        const { value } = req.body;
+        const searchEntries = await pool.query(
+            `SELECT * FROM ${table_name} WHERE name ILIKE $1`, // ILIKE Implements case-insensitive searching in postgres
+            [ `${value}%` ]
+        );
+        res.json(searchEntries.rows);
+    } catch(e){
+        console.log(e.message);
+    }
+});
+
+// 2. filter year/amount greater than or less than queries
+
+
+
+// 3. use such functions to get neccessary data and draw appropriate graphs
+app.get("/graph-fetch", async(req, res) => {
+    try{
+        const foodAmountFetch = await pool.query(
+            'SELECT amount, date FROM food_expense'
+        );
+        res.json(foodAmountFetch.rows);
     } catch(e){
         console.log(e.message);
     }

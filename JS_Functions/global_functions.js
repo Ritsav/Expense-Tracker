@@ -66,3 +66,22 @@ export async function insertData(category, productname, amount, entrydate){
         console.log(e.message);
     }
 }
+
+// Implement Filter Search Option Later on as well
+export async function searchDB() {
+    const value = document.getElementById('search-db').value;
+    try{
+        const response = await fetch(("http://localhost:5000/search"), {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({value}),
+        });
+        const data = await response.json();
+        console.log(data);
+        populateTable(data);
+    } catch(e){
+        console.log(e.message);
+    }
+}
